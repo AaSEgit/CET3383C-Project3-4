@@ -9,7 +9,7 @@ Due Date: October 22, 2023
 Description:   This project simulates a game of Rock, Paper, Scissors, Saw.
                 The game output will be used to complete Sections 3-5 of the SSD
 '''
-
+import random 
 # Functions
 
 # Prompts for player names, validates input, call menu()
@@ -55,8 +55,88 @@ def rules():
   validateReturnToMenu()    
 
 # Play game
-def play():
-  pass
+def play(player1_name, player2_name):
+    player1_name = "John" #placeholder
+    player2_name = "James" #placeholder
+    player1_winCount = 0
+    player2_winCount = 0
+
+    for round in range(1, 4):
+        print(f"Round {round}:")
+        
+        # Generate a random selection for the computer
+        computer_selection = random.randint(1, 4)
+        
+        player1_selection = get_player_selection(player1_name)
+        player2_selection = get_player_selection(player2_name)
+
+        print(f"{player1_name} chose {get_selection(player1_selection)}")
+        print(f"{player2_name} chose {get_selection(player2_selection)}")
+        print(f"Computer chose {get_selection(computer_selection)}")
+
+        result1 = f"{player1_name} vs. Computer: " + determine_winner(player1_name, player1_selection, computer_selection)
+        result2 = f"{player2_name} vs. Computer: " + determine_winner(player2_name, player2_selection, computer_selection)
+
+        print("\n" + result1)
+        print(result2 + "\n")
+
+        if(determine_winner(player1_name, player1_selection, computer_selection) == f"{player1_name} wins!"): player1_winCount += 1
+        if(determine_winner(player2_name, player2_selection, computer_selection) == f"{player2_name} wins!"): player2_winCount += 1
+        if(determine_winner(player1_name, player1_selection, computer_selection) == "Computer wins"): player1_winCount -= 1
+        if(determine_winner(player2_name, player2_selection, computer_selection) == "Computer wins"): player2_winCount -= 1
+
+    print("Winners of the game:")
+    print("-------------------")
+    print(f"{player1_name} vs Computer: ")
+    if(player1_winCount > 0) : print(f"{player1_name} wins the game!")
+    elif(player1_winCount == 0) : print(f"{player1_name} tied against the computer!")
+    else: print("The computer wins the game!")
+    print("-------------------")
+    print(f"{player2_name} vs Computer: ")
+    if(player2_winCount > 0) : print(f"{player2_name} wins the game!")
+    elif(player2_winCount == 0) : print(f"{player2_name} tied agains the computer!")
+    else: print("The computer wins the game!")
+
+    validateReturnToMenu()
+
+
+def get_player_selection(player_name):
+    while True:
+        print(f"{player_name}, please choose:")
+        print("1. Rock")
+        print("2. Paper")
+        print("3. Scissors")
+        print("4. Saw")
+        try:
+            selection = int(input("Enter the number of your choice: "))
+            if 1 <= selection <= 4:
+                return selection
+            else:
+                print("Invalid input. Please enter a number between 1 and 4.")
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+            
+def get_selection(selection):
+    if selection == 1:
+        return "rock"
+    elif selection == 2:
+        return "paper"
+    elif selection == 3:
+        return "scissors"
+    elif selection == 4:
+        return "saw"
+
+def determine_winner(playername, player_selection, computer_selection):
+    if player_selection == computer_selection:
+        return "It's a tie!"
+    
+    if (player_selection == 1 and (computer_selection == 3 or computer_selection == 4)) or \
+       (player_selection == 2 and (computer_selection == 1)) or \
+       (player_selection == 3 and (computer_selection == 2)) or \
+       (player_selection == 4 and (computer_selection == 2 or computer_selection == 3)):
+        return f"{playername} wins!"
+    else:
+        return "Computer wins"
 
 def main():
   initialScreen()
@@ -64,3 +144,5 @@ def main():
 # *** BEGINNING OF PROGRAM LOGIC***
 # call main() method here
 main()
+
+#play("John", "James")#test
