@@ -55,9 +55,9 @@ def rules():
   validateReturnToMenu()    
 
 # Play game
-def playGame(player1_name, player2_name):
-    player1_name = "John" //placeholder
-    player2_name = "James" //placeholder
+def play(player1_name, player2_name):
+    player1_name = "John" #placeholder
+    player2_name = "James" #placeholder
     player1_winCount = 0
     player2_winCount = 0
 
@@ -144,3 +144,5 @@ def main():
 # *** BEGINNING OF PROGRAM LOGIC***
 # call main() method here
 main()
+
+#play("John", "James")#test
