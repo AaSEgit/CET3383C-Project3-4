@@ -99,7 +99,8 @@ def rules():
   print("Overall human winner is based on the greater number of won games against the computer and least games lost (must account for tie between human players)")
   print("")
   validateReturnToMenu()
-
+ 
+statistics = createStatsArray()
 # Play game, 3 rounds per game
 def play(player1_name, player2_name):
     player1_name = "John" #placeholder
@@ -120,28 +121,70 @@ def play(player1_name, player2_name):
         print(f"{player2_name} chose {get_selection(player2_selection)}")
         print(f"Computer chose {get_selection(computer_selection)}")
 
-        result1 = f"{player1_name} vs. Computer: " + determine_winner(player1_name, player1_selection, computer_selection)
-        result2 = f"{player2_name} vs. Computer: " + determine_winner(player2_name, player2_selection, computer_selection)
+        result1 = determine_winner(player1_name, player1_selection, computer_selection)
+        result2 = determine_winner(player2_name, player2_selection, computer_selection)
 
-        print("\n" + result1)
-        print(result2 + "\n")
+        print(f"{player1_name} vs. Computer: {result1}")
+        print(f"{player2_name} vs. Computer: {result2}\n")
 
-        if(determine_winner(player1_name, player1_selection, computer_selection) == f"{player1_name} wins!"): player1_winCount += 1
-        if(determine_winner(player2_name, player2_selection, computer_selection) == f"{player2_name} wins!"): player2_winCount += 1
-        if(determine_winner(player1_name, player1_selection, computer_selection) == "Computer wins"): player1_winCount -= 1
-        if(determine_winner(player2_name, player2_selection, computer_selection) == "Computer wins"): player2_winCount -= 1
+        if result1 == f"{player1_name} wins!":
+            player1_winCount += 1
+            updateStatsPlayer(statistics, 0, 0)  # Player 1 wins round
+            updateStatsPlayer(statistics, 2, 1)  # Computer loses
+        elif result1 == "Computer wins":
+            computer_winCount += 1
+            updateStatsPlayer(statistics, 2, 0)  # Computer wins round
+            updateStatsPlayer(statistics, 0, 1)  # Player 1 loses
+        else:
+            updateStatsPlayer(statistics, 0, 2) #tie
+            updateStatsPlayer(statistics, 2, 2)
+
+        if result2 == f"{player2_name} wins!":
+            player2_winCount += 1
+            updateStatsPlayer(statistics, 1, 0)  # Player 2 wins round
+            updateStatsPlayer(statistics, 2, 1)  # Computer loses
+        elif result2 == "Computer wins":
+            computer_winCount += 1
+            updateStatsPlayer(statistics, 2, 0)  # Computer wins round
+            updateStatsPlayer(statistics, 1, 1)  # Player 2 loses
+        else:
+            updateStatsPlayer(statistics, 1, 2) #tie
+            updateStatsPlayer(statistics, 2, 2)
+
 
     print("Winners of the game:")
     print("-------------------")
-    print(f"{player1_name} vs Computer: ")
-    if(player1_winCount > 0) : print(f"{player1_name} wins the game!")
-    elif(player1_winCount == 0) : print(f"{player1_name} tied against the computer!")
-    else: print("The computer wins the game!")
+    print(f"{player1_name} vs Computer:")
+    if player1_winCount > computer_winCount:
+        print(f"{player1_name} wins the game!")
+        updateStatsPlayer(statistics, 0, 3)  # Player 1 wins the game
+        updateStatsPlayer(statistics, 2, 4)  # Computer loses the game
+    elif player1_winCount == computer_winCount:
+        print(f"{player1_name} tied against the computer!")
+        updateStatsPlayer(statistics, 0, 5)  # Game tied for Player 1
+        updateStatsPlayer(statistics, 2, 5)
+    else:
+        print("The computer wins the game!")
+        updateStatsPlayer(statistics, 2, 3)  # Computer wins the game
+        updateStatsPlayer(statistics, 0, 4)  # Player 1 loses the game
+
     print("-------------------")
-    print(f"{player2_name} vs Computer: ")
-    if(player2_winCount > 0) : print(f"{player2_name} wins the game!")
-    elif(player2_winCount == 0) : print(f"{player2_name} tied agains the computer!")
-    else: print("The computer wins the game!")
+    print(f"{player2_name} vs Computer:")
+    if player2_winCount > computer_winCount:
+        print(f"{player2_name} wins the game!")
+        updateStatsPlayer(statistics, 1, 3)  # Player 2 wins the game
+        updateStatsPlayer(statistics, 2, 4)  # Computer loses the game
+    elif player2_winCount == computer_winCount:
+        print(f"{player2_name} tied against the computer!")
+        updateStatsPlayer(statistics, 1, 5)  # Game tied for Player 2
+        updateStatsPlayer(statistics, 2, 5)
+    else:
+        print("The computer wins the game!")
+        updateStatsPlayer(statistics, 2, 3)  # Computer wins the game
+        updateStatsPlayer(statistics, 1, 4)
+
+    print("Updating statistics...")
+    stats(statistics, player1_name, player2_name)  # Display and store statistics
 
     validateReturnToMenu()
 
