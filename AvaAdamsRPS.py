@@ -27,18 +27,64 @@ def validateReturnToMenu():
     print("Enter 1 to return to the Menu")
     userInput = input()
     if userInput == '1':
-       print("")
+       print("\n")
        menu()
     else:
         print("Invalid input.")
         validateReturnToMenu()
 
+'''
+Rows: playerIndex, j
+    0 - player1
+    1 - player2
+    2 - computer
+Columns: statsIndex, i
+    0 - rounds won
+    1 - rounds lost
+    2 - rounds tied
+    3 - games won
+    4 - games lost
+    5 - games tied
+'''
 # Displays stats information
-def stats():
+def stats(stats, player1_name, player2_name):
   print("Statistics")
   print("---------------------------")
+  # print stats array
+  for row in range(len(stats)):
+        # print name of player
+        if (row == 0):
+            print(player1_name)
+        elif (row == 1):
+            print(player2_name)
+        else:
+            print("Computer")
+
+        # print stats
+        for column in range(len(stats[0])):
+            if (column == 0):
+                print("Rounds won:  ", stats[row][column]," ")
+            elif (column == 1):
+                print("Rounds lost: ", stats[row][column]," ")
+            elif (column == 2):
+                print("Rounds tied: ", stats[row][column]," ")
+            elif (column == 3):
+                print("Games won:   ", stats[row][column]," ")
+            elif (column == 4):
+                print("Games lost:  ", stats[row][column]," ")
+            else:
+                print("Games tied:  ", stats[row][column]," ")
+        print("\n")
+
   validateReturnToMenu()
 
+def createStatsArray():
+    stats = [[0 for i in range(6)] for j in range(3)]  # all columns are initialized to 0 at the start of the game
+    return stats
+
+def updateStatsPlayer(stats, playerIndex, statsIndex):
+    stats[playerIndex][statsIndex] = stats[playerIndex][statsIndex] + 1
+    
 # Displays rules for winning and basic instructions
 def rules():
   print("Winner of the round will be determined as follow:")
@@ -52,9 +98,9 @@ def rules():
   print("")
   print("Overall human winner is based on the greater number of won games against the computer and least games lost (must account for tie between human players)")
   print("")
-  validateReturnToMenu()    
+  validateReturnToMenu()
 
-# Play game
+# Play game, 3 rounds per game
 def play(player1_name, player2_name):
     player1_name = "John" #placeholder
     player2_name = "James" #placeholder
@@ -99,7 +145,6 @@ def play(player1_name, player2_name):
 
     validateReturnToMenu()
 
-
 def get_player_selection(player_name):
     while True:
         print(f"{player_name}, please choose:")
@@ -143,6 +188,7 @@ def main():
 
 # *** BEGINNING OF PROGRAM LOGIC***
 # call main() method here
-main()
+#main()
 
-#play("John", "James")#test
+#play("John", "James") #test
+#stats(createStatsArray(), "John", "James") #test
