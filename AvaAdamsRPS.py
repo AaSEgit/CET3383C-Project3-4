@@ -51,7 +51,7 @@ def stats(stats, player1_name, player2_name):
     print("Statistics")
     print("---------------------------")
     # print stats array
-    for row in range(2):             #len(stats)
+    for row in range(2):             #len(stats) for also displaying computer stats
             # print name of player
             if (row == 0):
                 print(player1_name)
@@ -80,7 +80,7 @@ def stats(stats, player1_name, player2_name):
     validateReturnToMenu()
 
 def createStatsArray():
-    stats = [[0 for i in range(6)] for j in range(3)]  # all columns are initialized to 0 at the start of the game
+    stats = [[0 for i in range(6)] for j in range(3)]  # all cells are initialized to 0 when the program starts
     return stats
 
 def updateStatsPlayer(stats, playerIndex, statsIndex):
@@ -117,8 +117,6 @@ def rules():
 
 # Play game, 3 rounds per game
 def play(statistics, player1_name, player2_name):
-    #player1_name = "John" #placeholder
-    #player2_name = "James" #placeholder
     player1_winCount = 0
     player2_winCount = 0
     computer_winCount = 0
@@ -198,9 +196,6 @@ def play(statistics, player1_name, player2_name):
         updateStatsPlayer(statistics, 2, 3)  # Computer wins the game
         updateStatsPlayer(statistics, 1, 4)
 
-    print("Updating statistics...")
-    #stats(statistics, player1_name, player2_name)  # Display and store statistics
-
     validateReturnToMenu()
 
 def get_player_selection(player_name):
@@ -253,7 +248,7 @@ statistics = createStatsArray() # stats array
 player1_name = "John"           # placeholder, needs to be set by initialScreen()
 player2_name = "James"          # placeholder, needs to be set by initialScreen()
 
-# Tests
+# Function Call Tests
 #play(statistics, player1_name, player2_name)
-stats(statistics, player1_name, player2_name)
+#stats(statistics, player1_name, player2_name)
 
