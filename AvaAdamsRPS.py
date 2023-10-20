@@ -76,10 +76,7 @@ def stats(stats, player1_name, player2_name):
                     print("Games tied:  ", stats[row][column]," ")
             print("\n")
 
-    if (stats[0][4] == 0 or stats[1][4] == 0):
-        print("Error: cannot divide by zero, overall winner cannot be determined")
-    else:
-        print("Overall winner: ", determineOverallWinner(stats, player1_name, player2_name))
+    print("Overall winner: ", determineOverallWinner(stats, player1_name, player2_name))
     validateReturnToMenu()
 
 def createStatsArray():
@@ -92,8 +89,8 @@ def updateStatsPlayer(stats, playerIndex, statsIndex):
 def determineOverallWinner(stats, player1_name, player2_name):
     overallWinner = ""
     # Compare players' win to lose ratios
-    player1Ratio = stats[0][3] / stats[0][4]
-    player2Ratio = stats[1][3] / stats[1][4]
+    player1Ratio = stats[0][3] - stats[0][4]
+    player2Ratio = stats[1][3] - stats[1][4]
 
     if (player1Ratio > player2Ratio):
         overallWinner = player1_name
@@ -102,7 +99,7 @@ def determineOverallWinner(stats, player1_name, player2_name):
     elif (player2Ratio == player1Ratio):
         overallWinner = "It's a tie!"
     return overallWinner
-    
+
 # Displays rules for winning and basic instructions
 def rules():
   print("Winner of the round will be determined as follow:")
@@ -258,5 +255,5 @@ player2_name = "James"          # placeholder, needs to be set by initialScreen(
 
 # Tests
 #play(statistics, player1_name, player2_name)
-#stats(statistics, player1_name, player2_name)
+stats(statistics, player1_name, player2_name)
 
