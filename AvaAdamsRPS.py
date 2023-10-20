@@ -24,7 +24,7 @@ def menu():
 
 # "Back button" - Accepts input to return to the Menu
 def validateReturnToMenu():
-    print("Enter 1 to return to the Menu")
+    print("Enter 1 to return to the Menu:")
     userInput = input()
     if userInput == '1':
        print("\n")
@@ -48,35 +48,39 @@ Columns: statsIndex, i
 '''
 # Displays stats information
 def stats(stats, player1_name, player2_name):
-  print("Statistics")
-  print("---------------------------")
-  # print stats array
-  for row in range(len(stats)):
-        # print name of player
-        if (row == 0):
-            print(player1_name)
-        elif (row == 1):
-            print(player2_name)
-        else:
-            print("Computer")
-
-        # print stats
-        for column in range(len(stats[0])):
-            if (column == 0):
-                print("Rounds won:  ", stats[row][column]," ")
-            elif (column == 1):
-                print("Rounds lost: ", stats[row][column]," ")
-            elif (column == 2):
-                print("Rounds tied: ", stats[row][column]," ")
-            elif (column == 3):
-                print("Games won:   ", stats[row][column]," ")
-            elif (column == 4):
-                print("Games lost:  ", stats[row][column]," ")
+    print("Statistics")
+    print("---------------------------")
+    # print stats array
+    for row in range(2):             #len(stats)
+            # print name of player
+            if (row == 0):
+                print(player1_name)
+            elif (row == 1):
+                print(player2_name)
             else:
-                print("Games tied:  ", stats[row][column]," ")
-        print("\n")
+                print("Computer")
 
-  validateReturnToMenu()
+            # print stats
+            for column in range(len(stats[0])):
+                if (column == 0):
+                    print("Rounds won:  ", stats[row][column]," ")
+                elif (column == 1):
+                    print("Rounds lost: ", stats[row][column]," ")
+                elif (column == 2):
+                    print("Rounds tied: ", stats[row][column]," ")
+                elif (column == 3):
+                    print("Games won:   ", stats[row][column]," ")
+                elif (column == 4):
+                    print("Games lost:  ", stats[row][column]," ")
+                else:
+                    print("Games tied:  ", stats[row][column]," ")
+            print("\n")
+
+    if (stats[0][4] == 0 or stats[1][4] == 0):
+        print("Error: cannot divide by zero, overall winner cannot be determined")
+    else:
+        print("Overall winner: ", determineOverallWinner(stats, player1_name, player2_name))
+    validateReturnToMenu()
 
 def createStatsArray():
     stats = [[0 for i in range(6)] for j in range(3)]  # all columns are initialized to 0 at the start of the game
@@ -84,6 +88,20 @@ def createStatsArray():
 
 def updateStatsPlayer(stats, playerIndex, statsIndex):
     stats[playerIndex][statsIndex] = stats[playerIndex][statsIndex] + 1
+
+def determineOverallWinner(stats, player1_name, player2_name):
+    overallWinner = ""
+    # Compare players' win to lose ratios
+    player1Ratio = stats[0][3] / stats[0][4]
+    player2Ratio = stats[1][3] / stats[1][4]
+
+    if (player1Ratio > player2Ratio):
+        overallWinner = player1_name
+    elif (player2Ratio > player1Ratio):
+        overallWinner = player2_name
+    elif (player2Ratio == player1Ratio):
+        overallWinner = "It's a tie!"
+    return overallWinner
     
 # Displays rules for winning and basic instructions
 def rules():
@@ -99,14 +117,14 @@ def rules():
   print("Overall human winner is based on the greater number of won games against the computer and least games lost (must account for tie between human players)")
   print("")
   validateReturnToMenu()
- 
-statistics = createStatsArray()
+
 # Play game, 3 rounds per game
-def play(player1_name, player2_name):
-    player1_name = "John" #placeholder
-    player2_name = "James" #placeholder
+def play(statistics, player1_name, player2_name):
+    #player1_name = "John" #placeholder
+    #player2_name = "James" #placeholder
     player1_winCount = 0
     player2_winCount = 0
+    computer_winCount = 0
 
     for round in range(1, 4):
         print(f"Round {round}:")
@@ -184,7 +202,7 @@ def play(player1_name, player2_name):
         updateStatsPlayer(statistics, 1, 4)
 
     print("Updating statistics...")
-    stats(statistics, player1_name, player2_name)  # Display and store statistics
+    #stats(statistics, player1_name, player2_name)  # Display and store statistics
 
     validateReturnToMenu()
 
@@ -233,5 +251,12 @@ def main():
 # call main() method here
 #main()
 
-#play("John", "James") #test
-#stats(createStatsArray(), "John", "James") #test
+# Global variables
+statistics = createStatsArray() # stats array
+player1_name = "John"           # placeholder, needs to be set by initialScreen()
+player2_name = "James"          # placeholder, needs to be set by initialScreen()
+
+# Tests
+#play(statistics, player1_name, player2_name)
+#stats(statistics, player1_name, player2_name)
+
