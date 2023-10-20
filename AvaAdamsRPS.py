@@ -222,7 +222,7 @@ def get_player_selection(player_name):
         except ValueError:
             print("Invalid input. Please enter a valid number.")
             
-def get_selection(selection):
+def selectionIntToString(selection):
     if selection == 1:
         return "rock"
     elif selection == 2:
