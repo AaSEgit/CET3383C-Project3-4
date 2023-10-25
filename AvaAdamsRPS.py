@@ -130,9 +130,9 @@ def play(statistics, player1_name, player2_name):
         player1_selection = get_player_selection(player1_name)
         player2_selection = get_player_selection(player2_name)
 
-        print(f"{player1_name} chose {get_selection(player1_selection)}")
-        print(f"{player2_name} chose {get_selection(player2_selection)}")
-        print(f"Computer chose {get_selection(computer_selection)}")
+        print(f"{player1_name} chose {selectionIntToString(player1_selection)}")
+        print(f"{player2_name} chose {selectionIntToString(player2_selection)}")
+        print(f"Computer chose {selectionIntToString(computer_selection)}")
 
         result1 = determine_winner(player1_name, player1_selection, computer_selection)
         result2 = determine_winner(player2_name, player2_selection, computer_selection)
@@ -214,7 +214,7 @@ def get_player_selection(player_name):
         except ValueError:
             print("Invalid input. Please enter a valid number.")
             
-def get_selection(selection):
+def selectionIntToString(selection):
     if selection == 1:
         return "rock"
     elif selection == 2:
