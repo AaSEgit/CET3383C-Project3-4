@@ -9,18 +9,60 @@ Due Date: October 22, 2023
 Description:   This project simulates a game of Rock, Paper, Scissors, Saw.
                 The game output will be used to complete Sections 3-5 of the SSD
 '''
-import random 
 # Functions
+import random
 
 # Prompts for player names, validates input, call menu()
 def initialScreen():
-  print("Rock, Paper, Scissors, Saw")
-  print("---------------------------")
+    # receive / check player name lengths
+    print("---------------------------")
+    print("Rock, Paper, Scissors, Saw")
+    print("---------------------------\n")
+
+    global player1_name, player2_name
+
+    def player_names(player_number):
+        while True:
+            name = input(f"What is the name of the {player_number} player? ")
+            if len(name) < 5:
+                print("Error: Name must be longer than 5 characters, Enter name again")
+            elif len(name) > 20:
+                print("Error: Name must be shorter than 20 characters, Enter name again")
+            else:
+                return name
+
+    # validate names
+    player1_name = player_names("first")
+    while True:
+        player2_name = player_names("second")
+        if player1_name != player2_name:
+            break
+        else:
+            print("Error: Second player name must be different than the first player. Please enter name again.")
+
+    return player1_name, player2_name
 
 # Displays menu options and prompts for user input
 def menu():
   print("Menu")
   print("---------------------------")
+  print("1. Play game")
+  print("2. Show game rules")
+  print("3. Show statistics")
+  print("4. Exit")
+  choice = input("Type choice and press return: ")
+
+  if choice == "1":
+      play(statistics, player1_name, player2_name)
+  elif choice == "2":
+      rules()
+  elif choice == "3":
+      stats(statistics, player1_name, player2_name)
+  elif choice == "4":
+      print("Goodbye")
+      exit()
+  else:
+      print("Error: Invalid choice. Please enter a valid menu option.")
 
 # "Back button" - Accepts input to return to the Menu
 def validateReturnToMenu():
@@ -82,6 +124,8 @@ def stats(stats, player1_name, player2_name):
 def createStatsArray():
     stats = [[0 for i in range(6)] for j in range(3)]  # all cells are initialized to 0 when the program starts
     return stats
+
+statistics = createStatsArray()  # stats array
 
 def updateStatsPlayer(stats, playerIndex, statsIndex):
     stats[playerIndex][statsIndex] = stats[playerIndex][statsIndex] + 1
@@ -237,18 +281,14 @@ def determine_winner(playername, player_selection, computer_selection):
         return "Computer wins"
 
 def main():
-  initialScreen()
+    player1_name, player2_name = initialScreen()
+    while True:
+        menu()
 
 # *** BEGINNING OF PROGRAM LOGIC***
 # call main() method here
-#main()
-
-# Global variables
-statistics = createStatsArray() # stats array
-player1_name = "John"           # placeholder, needs to be set by initialScreen()
-player2_name = "James"          # placeholder, needs to be set by initialScreen()
+main()
 
 # Function Call Tests
 #play(statistics, player1_name, player2_name)
 #stats(statistics, player1_name, player2_name)
-
