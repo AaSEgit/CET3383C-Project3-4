@@ -1,13 +1,17 @@
 '''
-CET3383C-Project3
+CET3383C-Project3-4
 Software Engineering 1
  
-Project 3: Rock, Paper, Scissors, Saw Game & Design Specifications Document
+Project 3: Rock, Paper, Scissors, Saw Game & Software Design Specification Document
+        (Procedural Design)
  
-Due Date: October 22, 2023
+Due Date: October 29, 2023
 
-Description:   This project simulates a game of Rock, Paper, Scissors, Saw.
-                The game output will be used to complete Sections 3-5 of the SSD
+Programmers: Ava Adams, Kenny Garcia, Juan Leon Perez
+
+Description:   This project simulates a game of Rock, Paper, Scissors, Saw using
+               an object-oriented programming approach.
+               The game output will be used to complete Sections 3-5 of the SDS
 '''
 # Functions
 import random
