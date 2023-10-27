@@ -1,17 +1,13 @@
 '''
-CET3383C-Project3-4
+CET3383C-Project3
 Software Engineering 1
  
-Project 3: Rock, Paper, Scissors, Saw Game & Software Design Specification Document
-        (Procedural Design)
+Project 3: Rock, Paper, Scissors, Saw Game & Design Specifications Document
  
-Due Date: October 29, 2023
+Due Date: October 22, 2023
 
-Programmers: Ava Adams, Kenny Garcia, Juan Leon Perez
-
-Description:   This project simulates a game of Rock, Paper, Scissors, Saw using
-               an object-oriented programming approach.
-               The game output will be used to complete Sections 3-5 of the SDS
+Description:   This project simulates a game of Rock, Paper, Scissors, Saw.
+                The game output will be used to complete Sections 3-5 of the SSD
 '''
 # Functions
 import random
@@ -48,7 +44,7 @@ def initialScreen():
 
 # Displays menu options and prompts for user input
 def menu():
-  print("Menu")
+  print("\nMenu")
   print("---------------------------")
   print("1. Play game")
   print("2. Show game rules")
@@ -70,10 +66,9 @@ def menu():
 
 # "Back button" - Accepts input to return to the Menu
 def validateReturnToMenu():
-    print("Enter 1 to return to the Menu:")
+    print("\nEnter 1 to return to the Menu:")
     userInput = input()
     if userInput == '1':
-       print("\n")
        menu()
     else:
         print("Invalid input.")
@@ -94,7 +89,7 @@ Columns: statsIndex, i
 '''
 # Displays stats information
 def stats(stats, player1_name, player2_name):
-    print("Statistics")
+    print("\nStatistics")
     print("---------------------------")
     # print stats array
     for row in range(2):             #len(stats) for also displaying computer stats
@@ -150,7 +145,7 @@ def determineOverallWinner(stats, player1_name, player2_name):
 
 # Displays rules for winning and basic instructions
 def rules():
-  print("Winner of the round will be determined as follow:")
+  print("\nWinner of the round will be determined as follow:")
   print("   a. Rock breaks scissors and Saw therefore rock wins over scissors and saw. Rock loses against paper.")
   print("   b. Scissors cut paper therefore scissors win over paper. Scissors lose against rock and Saw.")
   print("   c. Paper covers rock therefore paper wins over rock. Paper loses against scissors and saw")
@@ -170,7 +165,7 @@ def play(statistics, player1_name, player2_name):
     computer_winCount = 0
 
     for round in range(1, 4):
-        print(f"Round {round}:")
+        print(f"\nRound {round}:")
         
         # Generate a random selection for the computer
         computer_selection = random.randint(1, 4)
@@ -178,9 +173,9 @@ def play(statistics, player1_name, player2_name):
         player1_selection = get_player_selection(player1_name)
         player2_selection = get_player_selection(player2_name)
 
-        print(f"{player1_name} chose {selectionIntToString(player1_selection)}")
+        print(f"\n{player1_name} chose {selectionIntToString(player1_selection)}")
         print(f"{player2_name} chose {selectionIntToString(player2_selection)}")
-        print(f"Computer chose {selectionIntToString(computer_selection)}")
+        print(f"Computer chose {selectionIntToString(computer_selection)}\n")
 
         result1 = determine_winner(player1_name, player1_selection, computer_selection)
         result2 = determine_winner(player2_name, player2_selection, computer_selection)
