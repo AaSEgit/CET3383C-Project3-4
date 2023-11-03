@@ -23,6 +23,7 @@ public class Statistics {
     }
 
     public void displayStats(String playerName) {
+        System.out.println();
         System.out.println(playerName);
         System.out.println("Rounds won:  " + stats[0]);
         System.out.println("Rounds lost: " + stats[1]);
@@ -43,7 +44,7 @@ public class Statistics {
             overallWinner = player2.getPlayerName();
         else if (player2Ratio == player1Ratio)
             overallWinner = "It's a tie!";
-        
+        System.out.println();
         System.out.println("Overall winner: " + overallWinner);
     }
 }
