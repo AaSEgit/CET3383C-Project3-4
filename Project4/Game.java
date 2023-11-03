@@ -3,17 +3,11 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class Game {
-
     Player player1;
     Player player2;
     Player computer;
 
-    /*public Game() {
-        this.player1 = new Player();
-        this.player2 = new Player();
-    }*/
-
-
+    // Display game rules
     public void rules() {
         System.out.println("\nWinner of the round will be determined as follows:");
         System.out.println("   a. Rock breaks scissors and saw, therefore rock wins over scissors and saw. Rock loses against paper.");
@@ -25,6 +19,7 @@ public class Game {
         System.out.println("Overall human winner is based on the greater number of won games against the computer and the fewest games lost (must account for ties between human players).\n");
     }
 
+    // Get player's selection
     public int get_player_selection(String playerName) {
         Scanner scanner = new Scanner(System.in);
         int selection = 0;
@@ -52,6 +47,7 @@ public class Game {
         }
     }
 
+    // Map numeric selection to string
     public String selectionIntToString(int selection) {
         switch (selection) {
             case 1:
@@ -67,6 +63,7 @@ public class Game {
         }
     }
 
+    // Determine the winner of a round
     public String determine_winner(String playerName, int playerSelection, int computerSelection) {
         if (playerSelection == computerSelection) {
             return "It's a tie!";
@@ -82,76 +79,80 @@ public class Game {
         }
     }
 
+    // Update round statistics
     public void updateRoundStatistics(String result1, String result2, int[] winCounts) {
-        if (result1.equals(player1.getName() + " wins!")) {
+        if (result1.equals(player1.getPlayerName() + " wins!")) {
             winCounts[0]++;
-            player1.stats.incrementRoundsWon();
-            computer.stats.incrementRoundsLost();
+            player1.getPlayerStatistics().updateStats(0);
+            computer.getPlayerStatistics().updateStats(1);
         } else if (result1.equals("Computer wins")) {
             winCounts[2]++;
-            computer.stats.incrementRoundsWon();
-            player1.stats.incrementRoundsLost();
+            computer.getPlayerStatistics().updateStats(0);
+            player1.getPlayerStatistics().updateStats(1);
         } else {
-            computer.stats.incrementRoundsTied();
-            player1.stats.incrementRoundsTied();
+            computer.getPlayerStatistics().updateStats(2);
+            player1.getPlayerStatistics().updateStats(2);
         }
 
-        if (result2.equals(player2.getName() + " wins!")) {
+        if (result2.equals(player2.getPlayerName() + " wins!")) {
             winCounts[1]++;
-            player2.stats.incrementRoundsWon();
-            computer.stats.incrementRoundsLost();
+            player2.getPlayerStatistics().updateStats(0);
+            computer.getPlayerStatistics().updateStats(1);
         } else if (result2.equals("Computer wins")) {
             winCounts[3]++;
-            computer.stats.incrementRoundsWon();
-            player2.stats.incrementRoundsLost();
+            computer.getPlayerStatistics().updateStats(0);
+            player2.getPlayerStatistics().updateStats(1);
         } else {
-            computer.stats.incrementRoundsTied();
-            player2.stats.incrementRoundsTied();
+            computer.getPlayerStatistics().updateStats(2);
+            player2.getPlayerStatistics().updateStats(2);
         }
     }
 
+    // Update game statistics
     public void updateGameStatistics(int[] winCounts) {
         if (winCounts[0] > winCounts[2]) {
-            System.out.println(player1.getName()+ " wins the game!");
-            player1.stats.incrementGamesWon();
-            computer.stats.incrementGamesLost();
+            System.out.println(player1.getPlayerName() + " wins the game!");
+            player1.getPlayerStatistics().updateStats(3);
+            computer.getPlayerStatistics().updateStats(4);
         } else if (winCounts[0] == winCounts[2]) {
-            System.out.println(player1.getName() + " tied against the computer!");
-            player1.stats.incrementGamesTied();
-            computer.stats.incrementGamesTied();
+            System.out.println(player1.getPlayerName() + " tied against the computer!");
+            player1.getPlayerStatistics().updateStats(5);
+            computer.getPlayerStatistics().updateStats(5);
         } else {
             System.out.println("The computer wins the game!");
-            computer.stats.incrementGamesWon();
-            player1.stats.incrementGamesLost();
+            player1.getPlayerStatistics().updateStats(4);
+            computer.getPlayerStatistics().updateStats(3);
         }
 
         System.out.println("-------------------");
-        System.out.println(player2.getName() + " vs Computer:");
+        System.out.println(player2.getPlayerName() + " vs Computer:");
 
         if (winCounts[1] > winCounts[3]) {
-            System.out.println(player2.getName() + " wins the game!");
-            player2.stats.incrementGamesWon();
-            computer.stats.incrementGamesLost();
+            System.out.println(player2.getPlayerName() + " wins the game!");
+            player2.getPlayerStatistics().updateStats(3);
+            computer.getPlayerStatistics().updateStats(4);
         } else if (winCounts[1] == winCounts[3]) {
-            System.out.println(player2.getName() + " tied against the computer!");
-            player2.stats.incrementGamesTied();
-            computer.stats.incrementGamesTied();
+            System.out.println(player2.getPlayerName() + " tied against the computer!");
+            player2.getPlayerStatistics().updateStats(5);
+            computer.getPlayerStatistics().updateStats(5);
         } else {
             System.out.println("The computer wins the game!");
-            computer.stats.incrementGamesWon();
-            player2.stats.incrementGamesLost();
+            player2.getPlayerStatistics().updateStats(4);
+            computer.getPlayerStatistics().updateStats(3);
         }
     }
-    public void playGame(Player player1, Player player2, Player computer) {
+
+    // Main function to play the game
+    public void playGame(Player[] players) {
         Random random = new Random();
         Scanner scanner = new Scanner(System.in);
 
-        this.player1 = player1;
-        this.player2 = player2;
-        this.computer = computer;
+        this.player1 = players[0];
+        this.player2 = players[1];
+        this.computer = players[2];
 
-        String player1_name = player1.getName();
-        String player2_name = player2.getName();
+        String player1_name = player1.getPlayerName();
+        String player2_name = player2.getPlayerName();
 
         int[] winCounts = new int[4];
 
@@ -188,36 +189,5 @@ public class Game {
         System.out.println(player1_name + " vs Computer:");
 
         updateGameStatistics(winCounts);
-
-
-        //validateReturnToMenu();
     }
-
-
-    /*private void announceRoundWinners() {
-        System.out.println("\nRound Results:");
-        System.out.println(player1.getName() + " wins: " + player1Wins + " rounds");
-        System.out.println(player2.getName() + " wins: " + player2Wins + " rounds");
-        System.out.println("Ties: " + ties + " rounds");
-    }
-
-    private void announceGameWinner() {
-        System.out.println("\nGame Results:");
-
-        if (player1Wins == player2Wins) {
-            System.out.println("It's a tie! No overall winner.");
-        } else if (player1Wins > player2Wins) {
-            System.out.println(player1.getName() + " is the overall winner!");
-        } else {
-            System.out.println(player2.getName() + " is the overall winner!");
-        }
-    }
-
-    private void displayStatistics() {
-        System.out.println("\nStatistics:");
-        System.out.println(player1.getName() + " wins: " + player1Wins + " rounds");
-        System.out.println(player2.getName() + " wins: " + player2Wins + " rounds");
-        System.out.println("Ties: " + ties + " rounds");
-    }*/
-
 }
