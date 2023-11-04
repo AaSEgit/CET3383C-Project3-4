@@ -8,7 +8,7 @@ public class Game {
     Player computer;
 
     // Display game rules
-    public void rules() {
+    public void displayRules() {
         System.out.println("\nWinner of the round will be determined as follows:");
         System.out.println("   a. Rock breaks scissors and saw, therefore rock wins over scissors and saw. Rock loses against paper.");
         System.out.println("   b. Scissors cut paper, therefore scissors win over paper. Scissors lose against rock and saw.");
@@ -20,7 +20,7 @@ public class Game {
     }
 
     // Get player's selection
-    public int get_player_selection(String playerName) {
+    public int getPlayerSelection(String playerName) {
         Scanner scanner = new Scanner(System.in);
         int selection = 0;
 
@@ -64,7 +64,7 @@ public class Game {
     }
 
     // Determine the winner of a round
-    public String determine_winner(String playerName, int playerSelection, int computerSelection) {
+    public String determineWinner(String playerName, int playerSelection, int computerSelection) {
         if (playerSelection == computerSelection) {
             return "It's a tie!";
         }
@@ -168,15 +168,15 @@ public class Game {
 
             int computer_selection = random.nextInt(4) + 1;
 
-            int player1_selection = get_player_selection(player1_name);
-            int player2_selection = get_player_selection(player2_name);
+            int player1_selection = getPlayerSelection(player1_name);
+            int player2_selection = getPlayerSelection(player2_name);
 
             System.out.println("\n" + player1_name + " chose " + selectionIntToString(player1_selection));
             System.out.println(player2_name + " chose " + selectionIntToString(player2_selection));
             System.out.println("Computer chose " + selectionIntToString(computer_selection) + "\n");
 
-            String result1 = determine_winner(player1_name, player1_selection, computer_selection);
-            String result2 = determine_winner(player2_name, player2_selection, computer_selection);
+            String result1 = determineWinner(player1_name, player1_selection, computer_selection);
+            String result2 = determineWinner(player2_name, player2_selection, computer_selection);
 
             System.out.println(player1_name + " vs. Computer: " + result1);
             System.out.println(player2_name + " vs. Computer: " + result2 + "\n");
