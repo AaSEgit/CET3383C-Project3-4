@@ -14,14 +14,17 @@ public class Statistics {
         stats[statsIndex] = stats[statsIndex] + 1;
     }
 
+    // Returns number of games a player has won
     public int getGameWins() {
         return stats[3];
     }
 
+    // Returns number of games a player has lost
     public int getGameLoses() {
         return stats[4];
     }
 
+    // Displays round and game stats for a single player
     public void displayStats(String playerName) {
         System.out.println();
         System.out.println(playerName);
@@ -33,6 +36,7 @@ public class Statistics {
         System.out.println("Games tied:  " + stats[5]);
     }
 
+    // Displays the overall winner
     public static void determineOverallWinner(Player player1, Player player2) {
         String overallWinner = "";
         int player1Ratio = player1.getGameWins() - player1.getGameLoses();
