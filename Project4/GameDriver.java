@@ -27,7 +27,7 @@ public class GameDriver {
 
         while (!valid) {
             System.out.print("What is the name of the first player? ");
-            String name = scanner.nextLine();
+            String name = scanner.next();
             if (name.length() < 5) {
                 System.out.println("Error: Name must be longer than 5 characters. Enter the name again.");
             } else if (name.length() > 20) {
@@ -42,7 +42,7 @@ public class GameDriver {
 
         while (!valid) {
             System.out.print("What is the name of the second player? ");
-            String name = scanner.nextLine();
+            String name = scanner.next();
             if (name.length() < 5) {
                 System.out.println("Error: Name must be longer than 5 characters. Enter the name again.");
             } else if (name.length() > 20) {
@@ -56,6 +56,28 @@ public class GameDriver {
         }
 
         return names;
+    }
+
+    //Allow the user to return to the main menu
+    public static int validateReturnToMenu() {
+        Scanner scanner = new Scanner(System.in);
+
+
+        while(true) {
+            try {
+                System.out.print("\nEnter 1 to return to the Menu: ");
+                int userInput = scanner.nextInt();
+
+                if (userInput == 1) {
+                    return 1;
+                } else {
+                    System.out.println("Invalid input. Please enter 1.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+                scanner.next();// Clear the invalid input from the scanner
+            }
+        }
     }
 
     // Display the menu and return the user's choice
@@ -78,10 +100,10 @@ public class GameDriver {
                 if (choice >= 1 && choice <= 4) {
                     return choice;
                 } else {
-                    System.out.println("Invalid input. Please enter a number between 1 and 4.");
+                    System.out.println("Error: Invalid choice. Please enter a valid menu option.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a valid number.");
+                System.out.println("Error: Invalid choice. Please enter a valid menu option.");
                 scanner.next(); // Clear the invalid input from the scanner
             }
         }
@@ -95,9 +117,11 @@ public class GameDriver {
 
         // Get player names
         String[] names = getPlayerName();
+        //Initialize players
         Player p1 = new Player(names[0]);
         Player p2 = new Player(names[1]);
         Player computer = new Player("Computer");
+        //Create array of players and new Game
         Player[] players = { p1, p2, computer };
         Game game = new Game();
 
@@ -107,12 +131,15 @@ public class GameDriver {
             if (selection == 1) {
                 game.playGame(players);
             } else if (selection == 2) {
-                game.rules();
+                game.displayRules();
             } else if (selection == 3) {
+                System.out.println("\nStatistics");
+                System.out.print("---------------------------");
                 p1.getPlayerStatistics().displayStats(p1.getPlayerName());
                 p2.getPlayerStatistics().displayStats(p2.getPlayerName());
                 Statistics.determineOverallWinner(p1, p2);
             }
+            validateReturnToMenu();
             selection = displayMenu();
         }
 
