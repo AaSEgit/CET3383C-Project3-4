@@ -74,7 +74,7 @@ public class GameDriver {
                     System.out.println("Invalid input. Please enter 1.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a valid number.");
+                System.out.println("Invalid input. Please enter 1.");
                 scanner.next();// Clear the invalid input from the scanner
             }
         }
